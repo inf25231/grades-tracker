@@ -1,0 +1,86 @@
+{
+  "config": {
+    "course": "Computer Science",
+    "studyProgram": "Sample Curriculum",
+    "institution": "Sample University",
+    "degree": "Bachelor of Science (B.Sc.)",
+    "totalEcts": 180,
+    "totalSemesters": 6
+  },
+  "semesters": [
+    {
+      "id": 1,
+      "name": "S1",
+      "period": "Winter 2025"
+    },
+    {
+      "id": 2,
+      "name": "S2",
+      "period": "Summer 2026"
+    }
+  ],
+  "modules": [
+    {
+      "code": "CS101",
+      "name": "Introduction to Computer Science",
+      "semester": 1,
+      "ects": 5,
+      "status": "passed",
+      "grade": "1.3",
+      "subjects": [
+        {
+          "name": "Programming Fundamentals",
+          "format": "Written Exam (90 min)",
+          "date": "15.01.2026",
+          "time": "09:00",
+          "grade": "1.3",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "code": "MATH101",
+      "name": "Linear Algebra",
+      "semester": 1,
+      "ects": 5,
+      "status": "passed",
+      "grade": "2.0",
+      "subjects": [
+        {
+          "name": "Linear Algebra I",
+          "format": "Written Exam (90 min)",
+          "date": "22.01.2026",
+          "time": "10:00",
+          "grade": "2.0",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "code": "CS102",
+      "name": "Algorithms & Data Structures",
+      "semester": 2,
+      "ects": 6,
+      "status": "pending",
+      "grade": "",
+      "subjects": [
+        {
+          "name": "Algorithms I",
+          "format": "Written Exam (90 min)",
+          "date": "10.06.2026",
+          "time": "09:00",
+          "grade": "",
+          "weight": 0.5
+        },
+        {
+          "name": "Practical Assignments",
+          "format": "Project Work",
+          "date": "24.06.2026",
+          "time": "14:00",
+          "grade": "",
+          "weight": 0.5
+        }
+      ]
+    }
+  ]
+}

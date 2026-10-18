@@ -1,0 +1,10 @@
+# Personal academic records (keep private)
+data.json
+data.en.json
+
+# System & editor files
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/

@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Noten &amp; Module</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    
+    <header class="page-header">
+      <div>
+        <h1 id="pageTitle">Noten &amp; Module</h1>
+        <p class="subtitle" id="pageSubtitle">Übersicht der Prüfungsleistungen und Studienmodule</p>
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+        <a href="editor.html" class="seg-btn" id="editorLink" style="text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem; background: var(--bg-elevated); border: 1px solid var(--border-subtle); padding: 0.25rem 0.65rem; font-size: 0.745rem; color: var(--fg-secondary);">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+          </svg>
+          <span>Editor</span>
+        </a>
+        <div class="segmented-control lang-toggle" id="langToggle">
+          <button class="seg-btn active" data-lang="de">DE</button>
+          <button class="seg-btn" data-lang="en">EN</button>
+        </div>
+      </div>
+    </header>
+
+    
+    <div class="controls-wrapper">
+      
+      <div class="segmented-control" id="viewToggle" role="tablist">
+        <button class="seg-btn active" data-view="exams">Prüfungen</button>
+        <button class="seg-btn" data-view="modules">Modulübersicht</button>
+      </div>
+
+      
+      <div class="sub-toolbar">
+        <div class="segmented-control scrollable" id="semesterToggle">
+          <button class="seg-btn active" data-sem="all">Alle</button>
+          
+        </div>
+
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="text" 
+            id="searchInput" 
+            class="search-input" 
+            placeholder="Suchen..."
+            autocomplete="off"
+          >
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="card">
+      <div class="table-scroll-wrapper" id="contentArea">
+        
+      </div>
+    </div>
+  </div>
+
+  <script>
+    
+    let DB = null;
+    let currentView = 'exams';
+    let currentSemester = 'all';
+    let searchQuery = '';
+    let currentLang = localStorage.getItem('lang') || 'de';
+    const openModules = new Set();
+
+    const I18N = {
+      de: {
+        title: 'Noten & Module',
+        subtitle: 'Übersicht der Prüfungsleistungen und Studienmodule',
+        viewExams: 'Prüfungen',
+        viewModules: 'Modulübersicht',
+        all: 'Alle',
+        searchPlaceholder: 'Suchen...',
+        noData: 'NO DATA',
+        noDataSub: 'Keine Daten verfügbar',
+        emptyExams: 'Keine Einträge',
+        emptyExamsSub: 'Für den gewählten Filter wurden keine Prüfungstermine gefunden.',
+        emptyModules: 'Keine Module',
+        emptyModulesSub: 'Für den gewählten Filter wurden keine Module gefunden.',
+        date: 'Datum',
+        time: 'Uhrzeit',
+        examCourse: 'Prüfung / Lehrveranstaltung',
+        module: 'Modul',
+        examFormat: 'Prüfungsform',
+        gradeStatus: 'Note / Status',
+        modCode: 'Modul-Code',
+        modName: 'Modulbezeichnung',
+        sem: 'Sem',
+        ects: 'ECTS',
+        modGrade: 'Modulnote',
+        details: 'Details',
+        weight: 'Gewicht',
+        subAssessment: 'Teilleistung',
+        schedule: 'Termin',
+        recognized: 'Anerkannt',
+        passed: 'bestanden',
+        total: 'Gesamt',
+        subjectsCount: n => `${n} ${n === 1 ? 'Fach' : 'Fächer'}`,
+        assessmentsCount: n => `${n} ${n === 1 ? 'Leistung' : 'Leistungen'}`,
+        modulesCount: n => `${n} Module`,
+        goToModuleTooltip: 'Moduldetails anzeigen',
+        goToExamTooltip: 'Zur Prüfungsterminansicht springen'
+      },
+      en: {
+        title: 'Grades & Modules',
+        subtitle: 'Overview of examinations and study modules',
+        viewExams: 'Exams',
+        viewModules: 'Module Overview',
+        all: 'All',
+        searchPlaceholder: 'Search...',
+        noData: 'NO DATA',
+        noDataSub: 'No data available',
+        emptyExams: 'No entries',
+        emptyExamsSub: 'No examinations found for the selected filter.',
+        emptyModules: 'No modules',
+        emptyModulesSub: 'No modules found for the selected filter.',
+        date: 'Date',
+        time: 'Time',
+        examCourse: 'Exam / Course',
+        module: 'Module',
+        examFormat: 'Assessment Format',
+        gradeStatus: 'Grade / Status',
+        modCode: 'Module Code',
+        modName: 'Module Title',
+        sem: 'Sem',
+        ects: 'ECTS',
+        modGrade: 'Module Grade',
+        details: 'Details',
+        weight: 'Weight',
+        subAssessment: 'Sub-assessment',
+        schedule: 'Date / Time',
+        recognized: 'Recognized',
+        passed: 'passed',
+        total: 'Total',
+        subjectsCount: n => `${n} ${n === 1 ? 'Course' : 'Courses'}`,
+        assessmentsCount: n => `${n} ${n === 1 ? 'Assessment' : 'Assessments'}`,
+        modulesCount: n => `${n} Modules`,
+        goToModuleTooltip: 'Show module details',
+        goToExamTooltip: 'Jump to exam schedule'
+      }
+    };
+
+    function t(key, arg) {
+      const dict = I18N[currentLang] || I18N.de;
+      const val = dict[key] || I18N.de[key] || key;
+      return typeof val === 'function' ? val(arg) : val;
+    }
+
+    function applyStaticTranslations() {
+      document.documentElement.lang = currentLang;
+      document.title = t('title');
+      const titleEl = document.getElementById('pageTitle');
+      if (titleEl) titleEl.textContent = t('title');
+      const subEl = document.getElementById('pageSubtitle');
+      if (subEl) subEl.textContent = t('subtitle');
+      const examsBtn = document.querySelector('#viewToggle [data-view="exams"]');
+      if (examsBtn) examsBtn.textContent = t('viewExams');
+      const modsBtn = document.querySelector('#viewToggle [data-view="modules"]');
+      if (modsBtn) modsBtn.textContent = t('viewModules');
+      const search = document.getElementById('searchInput');
+      if (search) search.placeholder = t('searchPlaceholder');
+      document.querySelectorAll('#langToggle .seg-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-lang') === currentLang);
+      });
+    }
+
+    function esc(s) {
+      if (s === null || s === undefined) return '';
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function encodeSubjectId(name) {
+      return String(name || '').replace(/[^a-zA-Z0-9_-]/g, '_');
+    }
+
+    function parseDateForSort(dateStr) {
+      if (!dateStr) return 9999999999999;
+      const str = String(dateStr).trim();
+      const mFull = str.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})/);
+      if (mFull) {
+        return new Date(parseInt(mFull[3], 10), parseInt(mFull[2], 10) - 1, parseInt(mFull[1], 10)).getTime();
+      }
+      const mMonth = str.match(/^(\d{1,2})\.(\d{4})/);
+      if (mMonth) {
+        return new Date(parseInt(mMonth[2], 10), parseInt(mMonth[1], 10) - 1, 15).getTime();
+      }
+      return 9999999999999;
+    }
+
+    function parseTimeForSort(timeStr) {
+      if (!timeStr) return 0;
+      const m = String(timeStr).match(/^(\d{1,2}):(\d{2})/);
+      return m ? parseInt(m[1], 10) * 60 + parseInt(m[2], 10) : 0;
+    }
+
+    function getGradeColors(gradeStr) {
+      if (!gradeStr) return null;
+      const num = parseFloat(String(gradeStr).replace(',', '.'));
+      if (isNaN(num)) return null;
+
+      let hue;
+      if (num <= 1.0) {
+        hue = 140;
+      } else if (num <= 2.0) {
+        hue = 140 - (num - 1.0) * 40;
+      } else if (num <= 3.0) {
+        hue = 100 - (num - 2.0) * 48;
+      } else if (num <= 4.0) {
+        hue = 52 - (num - 3.0) * 30;
+      } else {
+        hue = Math.max(4, 22 - (num - 4.0) * 18);
+      }
+
+      const color = `hsl(${Math.round(hue)}, 78%, 56%)`;
+      const bg = `hsla(${Math.round(hue)}, 78%, 56%, 0.12)`;
+      const border = `hsla(${Math.round(hue)}, 78%, 56%, 0.28)`;
+
+      return { color, bg, border };
+    }
+
+    function renderStatus(grade, status) {
+      const st = String(status || '').toLowerCase();
+      const gr = grade && String(grade).toLowerCase() !== 'anerkannt' && String(grade).toLowerCase() !== 'recognized' ? String(grade).trim() : '';
+      const colors = getGradeColors(gr);
+
+      if (st.includes('anerkannt') || st.includes('recognized')) {
+        const recognizedText = t('recognized');
+        if (gr && colors) {
+          return `
+            <div class="status-badge" style="color: ${colors.color}; background-color: ${colors.bg}; border: 1px solid ${colors.border};">
+              <span>${esc(recognizedText)}</span>
+              <span class="grade-val font-semibold">(${esc(gr)})</span>
+            </div>
+          `;
+        }
+        return `
+          <div class="status-badge status-anerkannt">
+            <span>${esc(recognizedText)}</span>
+          </div>
+        `;
+      }
+
+      if ((st.includes('bestanden') || st.includes('passed')) && !gr) {
+        return `
+          <div class="status-badge status-grade">
+            <span>${esc(t('passed'))}</span>
+          </div>
+        `;
+      }
+
+      if (gr && gr !== 'offen' && gr !== 'pending') {
+        if (colors) {
+          return `
+            <div class="status-badge" style="color: ${colors.color}; background-color: ${colors.bg}; border: 1px solid ${colors.border};">
+              <span class="grade-val font-semibold">${esc(gr)}</span>
+            </div>
+          `;
+        }
+        return `
+          <div class="status-badge status-grade">
+            <span class="grade-val font-semibold">${esc(gr)}</span>
+          </div>
+        `;
+      }
+      return `<span class="tabular font-medium text-secondary" style="color: var(--fg-tertiary); font-size: 0.85rem;">–</span>`;
+    }
+
+    function goToModule(moduleCode) {
+      currentView = 'modules';
+      document.querySelectorAll('#viewToggle .seg-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-view') === 'modules');
+      });
+
+      if (searchQuery) {
+        searchQuery = '';
+        const si = document.getElementById('searchInput');
+        if (si) si.value = '';
+      }
+
+      const mod = (DB.modules || []).find(m => m.code === moduleCode);
+      if (mod && currentSemester !== 'all') {
+        const modSems = mod.semesters || [mod.semester];
+        if (!modSems.includes(Number(currentSemester))) {
+          currentSemester = 'all';
+          document.querySelectorAll('#semesterToggle .seg-btn').forEach(b => {
+            b.classList.toggle('active', b.getAttribute('data-sem') === 'all');
+          });
+        }
+      }
+
+      render();
+
+      setTimeout(() => {
+        const el = document.getElementById('mod-row-' + moduleCode);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.classList.remove('highlight-glow');
+          void el.offsetWidth;
+          el.classList.add('highlight-glow');
+        }
+      }, 60);
+    }
+
+    function goToExam(subjectName) {
+      currentView = 'exams';
+      document.querySelectorAll('#viewToggle .seg-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-view') === 'exams');
+      });
+
+      if (searchQuery) {
+        searchQuery = '';
+        const si = document.getElementById('searchInput');
+        if (si) si.value = '';
+      }
+
+      let targetSem = null;
+      (DB.modules || []).forEach(m => {
+        (m.subjects || []).forEach(s => {
+          if (s.name === subjectName) {
+            targetSem = (s.semester !== undefined && s.semester !== null) ? Number(s.semester) : Number(m.semester);
+          }
+        });
+      });
+
+      if (targetSem && currentSemester !== 'all' && Number(currentSemester) !== targetSem) {
+        currentSemester = 'all';
+        document.querySelectorAll('#semesterToggle .seg-btn').forEach(b => {
+          b.classList.toggle('active', b.getAttribute('data-sem') === 'all');
+        });
+      }
+
+      render();
+
+      setTimeout(() => {
+        const el = document.getElementById('exam-row-' + encodeSubjectId(subjectName));
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.classList.remove('highlight-glow');
+          void el.offsetWidth;
+          el.classList.add('highlight-glow');
+        }
+      }, 60);
+    }
+
+    async function loadData() {
+      const area = document.getElementById('contentArea');
+      const filesToTry = currentLang === 'en'
+        ? ['./data.en.json', './data.example.en.json', './data.json', './data.example.json']
+        : ['./data.json', './data.example.json'];
+
+      let loaded = false;
+      for (const file of filesToTry) {
+        try {
+          const res = await fetch(file, { cache: 'no-store' });
+          if (res.ok) {
+            DB = await res.json();
+            loaded = true;
+            break;
+          }
+        } catch (e) {}
+      }
+
+      if (!loaded) {
+        area.innerHTML = `
+          <div class="empty-container">
+            <div class="empty-icon">
+              <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
+            <div class="empty-title">${esc(t('noData'))}</div>
+            <div class="empty-subtitle">${esc(t('noDataSub'))}</div>
+          </div>
+        `;
+        return;
+      }
+
+      initSemesterButtons();
+      render();
+    }
+
+    function initSemesterButtons() {
+      const container = document.getElementById('semesterToggle');
+      const sems = DB.semesters || [];
+
+      let html = `<button class="seg-btn ${currentSemester === 'all' ? 'active' : ''}" data-sem="all">${esc(t('all'))}</button>`;
+      sems.forEach(s => {
+        const shortName = s.name || `S${s.id}`;
+        const activeClass = String(currentSemester) === String(s.id) ? 'active' : '';
+        html += `<button class="seg-btn ${activeClass}" data-sem="${s.id}">${esc(shortName)}</button>`;
+      });
+      container.innerHTML = html;
+    }
+
+    function renderExams() {
+      const allRows = [];
+      (DB.modules || []).forEach(mod => {
+        (mod.subjects || []).forEach(s => {
+          allRows.push({
+            ...s,
+            moduleCode: mod.code,
+            moduleName: mod.name,
+            semester: (s.semester !== undefined && s.semester !== null) ? Number(s.semester) : Number(mod.semester)
+          });
+        });
+      });
+
+      const q = searchQuery;
+      const filtered = allRows.filter(item => {
+        const matchSem = currentSemester === 'all' || item.semester === Number(currentSemester);
+        const matchQuery = !q ||
+          item.name.toLowerCase().includes(q) ||
+          item.moduleCode.toLowerCase().includes(q) ||
+          item.moduleName.toLowerCase().includes(q) ||
+          (item.format && item.format.toLowerCase().includes(q)) ||
+          (item.grade && String(item.grade).toLowerCase().includes(q)) ||
+          (item.date && item.date.toLowerCase().includes(q));
+        return matchSem && matchQuery;
+      });
+
+      if (filtered.length === 0) {
+        return `
+          <div class="empty-container">
+            <div class="empty-icon">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <div class="empty-title">${esc(t('emptyExams'))}</div>
+            <div class="empty-subtitle">${esc(t('emptyExamsSub'))}</div>
+          </div>
+        `;
+      }
+
+      const grouped = {};
+      filtered.forEach(r => {
+        grouped[r.semester] = grouped[r.semester] || [];
+        grouped[r.semester].push(r);
+      });
+
+      const semMap = {};
+      (DB.semesters || []).forEach(s => { semMap[s.id] = s; });
+
+      let html = `
+        <table class="tbl-exams">
+          <colgroup>
+            <col class="c-date">
+            <col class="c-time">
+            <col class="c-subj">
+            <col class="c-mod">
+            <col class="c-form">
+            <col class="c-grade">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>${esc(t('date'))}</th>
+              <th>${esc(t('time'))}</th>
+              <th>${esc(t('examCourse'))}</th>
+              <th>${esc(t('module'))}</th>
+              <th>${esc(t('examFormat'))}</th>
+              <th>${esc(t('gradeStatus'))}</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      Object.keys(grouped).sort((a,b) => a - b).forEach(semKey => {
+        const sem = semMap[semKey] || { name: `S${semKey}`, period: '' };
+        const rows = grouped[semKey];
+
+        rows.sort((a, b) => {
+          const d = parseDateForSort(a.date) - parseDateForSort(b.date);
+          if (d !== 0) return d;
+          return parseTimeForSort(a.time) - parseTimeForSort(b.time);
+        });
+
+        const semHeaderTitle = sem.period ? `${esc(sem.name)} ${esc(sem.period)}` : esc(sem.name);
+
+        html += `
+          <tr class="semester-group-header">
+            <td colspan="6">${semHeaderTitle} (${t('assessmentsCount', rows.length)})</td>
+          </tr>
+        `;
+
+        rows.forEach(r => {
+          const rowId = 'exam-row-' + encodeSubjectId(r.name);
+          html += `
+            <tr class="main-row" id="${rowId}">
+              <td class="tabular font-semibold cell-nowrap">${esc(r.date)}</td>
+              <td class="tabular text-secondary cell-nowrap">${esc(r.time)}</td>
+              <td class="font-semibold cell-wrap">${esc(r.name)}</td>
+              <td class="cell-nowrap">
+                <button class="code-link tabular" onclick="goToModule('${esc(r.moduleCode)}')" title="${esc(r.moduleName)} &rarr; ${esc(t('goToModuleTooltip'))}">
+                  ${esc(r.moduleCode)}
+                </button>
+              </td>
+              <td class="cell-nowrap"><span class="format-pill">${esc(r.format)}</span></td>
+              <td class="cell-nowrap">${renderStatus(r.grade, r.status)}</td>
+            </tr>
+          `;
+        });
+      });
+
+      html += `</tbody></table>`;
+      return html;
+    }
+
+    function renderModules() {
+      const q = searchQuery;
+      const filtered = (DB.modules || []).filter(mod => {
+        const modSems = mod.semesters || [mod.semester];
+        const matchSem = currentSemester === 'all' || modSems.includes(Number(currentSemester));
+        const subjsMatch = (mod.subjects || []).some(s => s.name.toLowerCase().includes(q));
+        const matchQuery = !q ||
+          mod.code.toLowerCase().includes(q) ||
+          mod.name.toLowerCase().includes(q) ||
+          (mod.grade && String(mod.grade).toLowerCase().includes(q)) ||
+          subjsMatch;
+        return matchSem && matchQuery;
+      });
+
+      if (filtered.length === 0) {
+        return `
+          <div class="empty-container">
+            <div class="empty-icon">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <div class="empty-title">${esc(t('emptyModules'))}</div>
+            <div class="empty-subtitle">${esc(t('emptyModulesSub'))}</div>
+          </div>
+        `;
+      }
+
+      const grouped = {};
+      filtered.forEach(m => {
+        grouped[m.semester] = grouped[m.semester] || [];
+        grouped[m.semester].push(m);
+      });
+
+      const semMap = {};
+      (DB.semesters || []).forEach(s => { semMap[s.id] = s; });
+
+      let html = `
+        <table class="tbl-modules">
+          <colgroup>
+            <col class="c-code">
+            <col class="c-name">
+            <col class="c-sem">
+            <col class="c-ects">
+            <col class="c-grade">
+            <col class="c-action">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>${esc(t('modCode'))}</th>
+              <th>${esc(t('modName'))}</th>
+              <th>${esc(t('sem'))}</th>
+              <th>${esc(t('ects'))}</th>
+              <th>${esc(t('modGrade'))}</th>
+              <th style="text-align: right;">${esc(t('details'))}</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      Object.keys(grouped).sort((a,b) => a - b).forEach(semKey => {
+        const sem = semMap[semKey] || { name: `S${semKey}`, period: '' };
+        const mods = grouped[semKey];
+        const semHeaderTitle = sem.period ? `${esc(sem.name)} ${esc(sem.period)}` : esc(sem.name);
+
+        html += `
+          <tr class="semester-group-header">
+            <td colspan="6">${semHeaderTitle} (${t('modulesCount', mods.length)})</td>
+          </tr>
+        `;
+
+        mods.forEach(m => {
+          const subjects = m.subjects || [];
+          const hasMultiple = subjects.length > 1;
+          const isOpen = openModules.has(m.code);
+
+          let subRows = '';
+          subjects.forEach(s => {
+            const w = s.weight ? `<span class="weight-tag tabular">${Math.round(s.weight * 100)}%</span>` : '';
+            const semBadge = (m.semesters && m.semesters.length > 1 && s.semester) 
+              ? `<span class="sem-tag tabular">S${s.semester}</span> ` 
+              : '';
+
+            subRows += `
+              <tr>
+                <td class="cell-nowrap">${w}</td>
+                <td class="cell-wrap">
+                  ${semBadge}
+                  <button class="subj-link" onclick="goToExam('${esc(s.name)}')" title="${esc(t('goToExamTooltip'))}">
+                    <span>${esc(s.name)}</span>
+                    <svg class="subj-link-icon" viewBox="0 0 16 16" fill="currentColor">
+                      <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                    </svg>
+                  </button>
+                </td>
+                <td class="cell-nowrap"><span class="format-pill">${esc(s.format)}</span></td>
+                <td class="tabular text-secondary cell-nowrap">${esc(s.date)} ${esc(s.time)}</td>
+                <td class="cell-nowrap" style="text-align: right;">${renderStatus(s.grade, s.status)}</td>
+              </tr>
+            `;
+          });
+
+          const actionBtn = hasMultiple 
+            ? `<button class="expand-btn ${isOpen ? 'open' : ''}" onclick="toggleModule('${esc(m.code)}')">
+                 <span>${t('subjectsCount', subjects.length)}</span>
+                 <svg class="chevron" viewBox="0 0 12 12"><path d="M4 2.5L7.5 6L4 9.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+               </button>`
+            : `<button class="action-arrow-btn" onclick="goToExam('${esc(subjects[0]?.name || m.name)}')" title="${esc(t('goToExamTooltip'))}">
+                 <svg viewBox="0 0 12 12"><path d="M4.5 2.5L8 6L4.5 9.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+               </button>`;
+
+          const semDisplay = m.semesterLabel || `S${m.semester}`;
+          const modRowId = 'mod-row-' + m.code;
+
+          html += `
+            <tr class="main-row" id="${modRowId}">
+              <td class="tabular font-semibold cell-nowrap">${esc(m.code)}</td>
+              <td class="font-semibold cell-nowrap">${esc(m.name)}</td>
+              <td class="tabular text-secondary cell-nowrap">${esc(semDisplay)}</td>
+              <td class="tabular cell-nowrap">${m.ects} ECTS</td>
+              <td class="cell-nowrap">${renderStatus(m.grade, m.status)}</td>
+              <td class="cell-nowrap" style="text-align: right;">${actionBtn}</td>
+            </tr>
+            <tr class="details-row ${isOpen ? 'open' : ''}" id="details-${esc(m.code)}">
+              <td colspan="6">
+                <div class="sub-table-container">
+                  <table class="sub-table">
+                    <colgroup>
+                      <col style="width: 55px;">
+                      <col style="width: auto; min-width: 190px;">
+                      <col style="width: 230px;">
+                      <col style="width: 160px;">
+                      <col style="width: 135px;">
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th>${esc(t('weight'))}</th>
+                        <th>${esc(t('subAssessment'))}</th>
+                        <th>${esc(t('examFormat'))}</th>
+                        <th>${esc(t('schedule'))}</th>
+                        <th style="text-align: right;">${esc(t('gradeStatus'))}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${subRows}
+                    </tbody>
+                  </table>
+                </div>
+              </td>
+            </tr>
+          `;
+        });
+      });
+
+      const totalEcts = filtered.reduce((acc, m) => acc + (Number(m.ects) || 0), 0);
+      html += `
+        </tbody>
+        <tfoot>
+          <tr class="summary-row">
+            <td colspan="3" class="font-semibold text-secondary" style="text-align: right;">${esc(t('total'))}</td>
+            <td class="tabular font-semibold cell-nowrap">&Sigma; ${totalEcts} ECTS</td>
+            <td colspan="2"></td>
+          </tr>
+        </tfoot>
+      </table>`;
+      return html;
+    }
+
+    function toggleModule(code) {
+      if (openModules.has(code)) {
+        openModules.delete(code);
+      } else {
+        openModules.add(code);
+      }
+      render();
+    }
+
+    function render() {
+      if (!DB) return;
+      const area = document.getElementById('contentArea');
+      if (currentView === 'exams') {
+        area.innerHTML = renderExams();
+      } else {
+        area.innerHTML = renderModules();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      applyStaticTranslations();
+      loadData();
+
+      document.getElementById('langToggle').addEventListener('click', (e) => {
+        const btn = e.target.closest('.seg-btn');
+        if (!btn) return;
+        const newLang = btn.getAttribute('data-lang');
+        if (newLang === currentLang) return;
+        currentLang = newLang;
+        localStorage.setItem('lang', currentLang);
+        applyStaticTranslations();
+        loadData();
+      });
+
+      document.getElementById('viewToggle').addEventListener('click', (e) => {
+        const btn = e.target.closest('.seg-btn');
+        if (!btn) return;
+        document.querySelectorAll('#viewToggle .seg-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentView = btn.getAttribute('data-view');
+        render();
+      });
+
+      document.getElementById('semesterToggle').addEventListener('click', (e) => {
+        const btn = e.target.closest('.seg-btn');
+        if (!btn) return;
+        document.querySelectorAll('#semesterToggle .seg-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentSemester = btn.getAttribute('data-sem');
+        render();
+      });
+
+      const searchInput = document.getElementById('searchInput');
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value.trim().toLowerCase();
+        render();
+      });
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          e.target.value = '';
+          searchQuery = '';
+          render();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

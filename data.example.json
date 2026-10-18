@@ -1,0 +1,86 @@
+{
+  "config": {
+    "course": "Informatik",
+    "studyProgram": "Muster-Curriculum",
+    "institution": "Muster-Hochschule",
+    "degree": "Bachelor of Science (B.Sc.)",
+    "totalEcts": 180,
+    "totalSemesters": 6
+  },
+  "semesters": [
+    {
+      "id": 1,
+      "name": "S1",
+      "period": "WiSe 25/26"
+    },
+    {
+      "id": 2,
+      "name": "S2",
+      "period": "SoSe 26"
+    }
+  ],
+  "modules": [
+    {
+      "code": "CS101",
+      "name": "Einführung in die Informatik",
+      "semester": 1,
+      "ects": 5,
+      "status": "bestanden",
+      "grade": "1,3",
+      "subjects": [
+        {
+          "name": "Grundlagen der Programmierung",
+          "format": "Klausur (90 min)",
+          "date": "15.01.2026",
+          "time": "09:00",
+          "grade": "1,3",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "code": "MATH101",
+      "name": "Lineare Algebra",
+      "semester": 1,
+      "ects": 5,
+      "status": "bestanden",
+      "grade": "2,0",
+      "subjects": [
+        {
+          "name": "Lineare Algebra I",
+          "format": "Klausur (90 min)",
+          "date": "22.01.2026",
+          "time": "10:00",
+          "grade": "2,0",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "code": "CS102",
+      "name": "Algorithmen & Datenstrukturen",
+      "semester": 2,
+      "ects": 6,
+      "status": "offen",
+      "grade": "",
+      "subjects": [
+        {
+          "name": "Algorithmen I",
+          "format": "Klausur (90 min)",
+          "date": "10.06.2026",
+          "time": "09:00",
+          "grade": "",
+          "weight": 0.5
+        },
+        {
+          "name": "Praktische Übungen",
+          "format": "Projektarbeit",
+          "date": "24.06.2026",
+          "time": "14:00",
+          "grade": "",
+          "weight": 0.5
+        }
+      ]
+    }
+  ]
+}
