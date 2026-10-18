@@ -518,7 +518,7 @@
                   ${esc(r.moduleCode)}
                 </button>
               </td>
-              <td class="cell-nowrap"><span class="format-pill">${esc(r.format)}</span></td>
+              <td><span class="format-pill">${esc(r.format)}</span></td>
               <td class="cell-nowrap">${renderStatus(r.grade, r.status)}</td>
             </tr>
           `;
@@ -625,7 +625,7 @@
                     </svg>
                   </button>
                 </td>
-                <td class="cell-nowrap"><span class="format-pill">${esc(s.format)}</span></td>
+                <td><span class="format-pill">${esc(s.format)}</span></td>
                 <td class="tabular text-secondary cell-nowrap">${esc(s.date)} ${esc(s.time)}</td>
                 <td class="cell-nowrap" style="text-align: right;">${renderStatus(s.grade, s.status)}</td>
               </tr>
@@ -647,7 +647,7 @@
           html += `
             <tr class="main-row" id="${modRowId}">
               <td class="tabular font-semibold cell-nowrap">${esc(m.code)}</td>
-              <td class="font-semibold cell-nowrap">${esc(m.name)}</td>
+              <td class="font-semibold cell-wrap">${esc(m.name)}</td>
               <td class="tabular text-secondary cell-nowrap">${esc(semDisplay)}</td>
               <td class="tabular cell-nowrap">${m.ects} ECTS</td>
               <td class="cell-nowrap">${renderStatus(m.grade, m.status)}</td>
@@ -659,10 +659,10 @@
                   <table class="sub-table">
                     <colgroup>
                       <col style="width: 55px;">
-                      <col style="width: auto; min-width: 190px;">
-                      <col style="width: 230px;">
-                      <col style="width: 160px;">
+                      <col style="width: auto; min-width: 160px;">
+                      <col style="width: 170px;">
                       <col style="width: 135px;">
+                      <col style="width: 115px;">
                     </colgroup>
                     <thead>
                       <tr>

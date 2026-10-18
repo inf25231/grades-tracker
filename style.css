@@ -211,22 +211,22 @@
     }
 
     
-    .tbl-exams { min-width: 900px; }
+    .tbl-exams { width: 100%; min-width: 680px; }
     .tbl-exams col.c-date   { width: 95px; }
-    .tbl-exams col.c-time   { width: 95px; }
-    .tbl-exams col.c-subj   { width: auto; min-width: 210px; }
-    .tbl-exams col.c-mod    { width: 100px; }
-    .tbl-exams col.c-form   { width: 255px; }
-    .tbl-exams col.c-grade  { width: 145px; }
+    .tbl-exams col.c-time   { width: 90px; }
+    .tbl-exams col.c-subj   { width: auto; min-width: 170px; }
+    .tbl-exams col.c-mod    { width: 95px; }
+    .tbl-exams col.c-form   { width: 180px; }
+    .tbl-exams col.c-grade  { width: 125px; }
 
     
-    .tbl-modules { min-width: 900px; }
-    .tbl-modules col.c-code   { width: 115px; }
-    .tbl-modules col.c-name   { width: auto; min-width: 360px; }
-    .tbl-modules col.c-sem    { width: 75px; }
-    .tbl-modules col.c-ects   { width: 85px; }
-    .tbl-modules col.c-grade  { width: 140px; }
-    .tbl-modules col.c-action { width: 95px; }
+    .tbl-modules { width: 100%; min-width: 650px; }
+    .tbl-modules col.c-code   { width: 105px; }
+    .tbl-modules col.c-name   { width: auto; min-width: 200px; }
+    .tbl-modules col.c-sem    { width: 65px; }
+    .tbl-modules col.c-ects   { width: 75px; }
+    .tbl-modules col.c-grade  { width: 120px; }
+    .tbl-modules col.c-action { width: 90px; }
 
     tfoot tr.summary-row td {
       background: var(--bg-inset);
@@ -414,8 +414,9 @@
       border: 1px solid var(--border-subtle);
       padding: 0.18rem 0.55rem;
       border-radius: 5px;
-      line-height: 1.25;
-      white-space: nowrap;
+      line-height: 1.3;
+      white-space: normal;
+      word-break: normal;
     }
 
     .sem-tag {
