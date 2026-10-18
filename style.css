@@ -211,22 +211,39 @@
     }
 
     
-    .tbl-exams { width: 100%; min-width: 680px; }
+    .tbl-exams { width: 100%; min-width: 650px; }
     .tbl-exams col.c-date   { width: 95px; }
     .tbl-exams col.c-time   { width: 90px; }
-    .tbl-exams col.c-subj   { width: auto; min-width: 170px; }
+    .tbl-exams col.c-subj   { width: auto; }
     .tbl-exams col.c-mod    { width: 95px; }
-    .tbl-exams col.c-form   { width: 180px; }
+    .tbl-exams col.c-form   { width: 175px; }
     .tbl-exams col.c-grade  { width: 125px; }
 
     
-    .tbl-modules { width: 100%; min-width: 650px; }
+    .tbl-modules { width: 100%; min-width: 620px; }
     .tbl-modules col.c-code   { width: 105px; }
-    .tbl-modules col.c-name   { width: auto; min-width: 200px; }
+    .tbl-modules col.c-name   { width: auto; }
     .tbl-modules col.c-sem    { width: 65px; }
     .tbl-modules col.c-ects   { width: 75px; }
     .tbl-modules col.c-grade  { width: 120px; }
-    .tbl-modules col.c-action { width: 90px; }
+    .tbl-modules col.c-action { width: 120px; }
+
+    .cell-action {
+      text-align: right;
+      white-space: nowrap;
+      padding-right: 0.9rem !important;
+      padding-left: 0.25rem !important;
+    }
+
+    thead th.cell-action {
+      text-align: right;
+      padding-right: 0.9rem !important;
+      padding-left: 0.25rem !important;
+    }
+
+    tr.details-row > td {
+      padding: 0;
+    }
 
     tfoot tr.summary-row td {
       background: var(--bg-inset);

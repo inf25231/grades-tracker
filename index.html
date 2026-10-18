@@ -584,7 +584,7 @@
               <th>${esc(t('sem'))}</th>
               <th>${esc(t('ects'))}</th>
               <th>${esc(t('modGrade'))}</th>
-              <th style="text-align: right;">${esc(t('details'))}</th>
+              <th class="cell-action">${esc(t('details'))}</th>
             </tr>
           </thead>
           <tbody>
@@ -651,18 +651,18 @@
               <td class="tabular text-secondary cell-nowrap">${esc(semDisplay)}</td>
               <td class="tabular cell-nowrap">${m.ects} ECTS</td>
               <td class="cell-nowrap">${renderStatus(m.grade, m.status)}</td>
-              <td class="cell-nowrap" style="text-align: right;">${actionBtn}</td>
+              <td class="cell-action">${actionBtn}</td>
             </tr>
             <tr class="details-row ${isOpen ? 'open' : ''}" id="details-${esc(m.code)}">
               <td colspan="6">
                 <div class="sub-table-container">
                   <table class="sub-table">
                     <colgroup>
-                      <col style="width: 55px;">
-                      <col style="width: auto; min-width: 160px;">
-                      <col style="width: 170px;">
-                      <col style="width: 135px;">
-                      <col style="width: 115px;">
+                      <col style="width: 50px;">
+                      <col style="width: auto;">
+                      <col style="width: 160px;">
+                      <col style="width: 130px;">
+                      <col style="width: 110px;">
                     </colgroup>
                     <thead>
                       <tr>
