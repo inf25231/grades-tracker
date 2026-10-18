@@ -17,8 +17,8 @@
     .nav-back-link {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      font-size: 0.85rem;
+      gap: 0.45rem;
+      font-size: 0.875rem;
       font-weight: 500;
       color: var(--accent);
       text-decoration: none;
@@ -32,24 +32,26 @@
     .action-bar {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.6rem;
+      gap: 0.65rem;
       margin-bottom: 1.5rem;
       align-items: center;
     }
 
     .btn {
       font-family: var(--font-system);
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 500;
-      padding: 0.45rem 0.9rem;
-      border-radius: 7px;
+      padding: 0.5rem 1rem;
+      min-height: 38px;
+      border-radius: 8px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.5rem;
       transition: all 0.16s cubic-bezier(0.4, 0, 0.2, 1);
       border: 1px solid transparent;
       white-space: nowrap;
+      line-height: 1.2;
     }
 
     .btn-primary {
@@ -73,19 +75,31 @@
     }
 
     .btn-danger {
-      background: rgba(255, 69, 58, 0.1);
+      background: rgba(255, 69, 58, 0.12);
       color: #ff453a;
       border-color: rgba(255, 69, 58, 0.25);
     }
 
     .btn-danger:hover {
-      background: rgba(255, 69, 58, 0.2);
+      background: rgba(255, 69, 58, 0.22);
     }
 
     .btn-sm {
-      padding: 0.25rem 0.6rem;
-      font-size: 0.75rem;
-      border-radius: 5px;
+      min-height: 32px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.785rem;
+      border-radius: 6px;
+    }
+
+    .btn-icon-only {
+      width: 34px;
+      height: 34px;
+      min-height: 34px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
     }
 
     .section-card {
@@ -98,7 +112,7 @@
     }
 
     .section-title {
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       font-weight: 700;
       margin-bottom: 1rem;
       display: flex;
@@ -109,7 +123,7 @@
 
     .semesters-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
       gap: 0.75rem;
     }
 
@@ -117,18 +131,17 @@
       background: var(--bg-inset);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 0.75rem;
+      padding: 0.85rem;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-      position: relative;
+      gap: 0.6rem;
     }
 
     .semester-item-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.8rem;
+      font-size: 0.825rem;
       font-weight: 600;
       color: var(--fg-secondary);
     }
@@ -136,28 +149,29 @@
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 0.3rem;
+      gap: 0.35rem;
     }
 
     .form-label {
-      font-size: 0.72rem;
-      font-weight: 500;
+      font-size: 0.725rem;
+      font-weight: 600;
       color: var(--fg-secondary);
       text-transform: uppercase;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.04em;
     }
 
     .form-input, .form-select {
       font-family: var(--font-system);
-      font-size: 0.8rem;
+      font-size: 0.835rem;
       background: var(--bg-inset);
       color: var(--fg);
       border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 0.4rem 0.6rem;
+      padding: 0.45rem 0.65rem;
       outline: none;
       transition: all 0.15s ease;
       width: 100%;
+      min-height: 34px;
     }
 
     .form-input:focus, .form-select:focus {
@@ -175,13 +189,13 @@
       box-shadow: var(--card-shadow);
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.1rem;
     }
 
     .module-card-header {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
       border-bottom: 1px solid var(--border-subtle);
       padding-bottom: 0.75rem;
       gap: 1rem;
@@ -195,7 +209,7 @@
 
     .module-fields-grid {
       display: grid;
-      grid-template-columns: 140px 1fr 90px 85px 120px 100px;
+      grid-template-columns: 140px 1fr 110px 90px 130px 105px;
       gap: 0.75rem;
     }
 
@@ -203,7 +217,7 @@
       background: var(--bg-inset);
       border: 1px solid var(--border-subtle);
       border-radius: 8px;
-      padding: 0.9rem;
+      padding: 1rem;
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
@@ -213,16 +227,22 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.8rem;
+      font-size: 0.825rem;
       font-weight: 600;
       color: var(--fg-secondary);
     }
 
     .sub-exam-row {
       display: grid;
-      grid-template-columns: 1fr 180px 100px 80px 85px 95px 36px;
-      gap: 0.5rem;
-      align-items: center;
+      grid-template-columns: 2fr 1.5fr 115px 90px 85px 85px 36px;
+      gap: 0.55rem;
+      align-items: end;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .sub-exam-row:last-child {
+      border-bottom: none;
     }
 
     .preview-box {
@@ -231,12 +251,12 @@
       border-radius: 8px;
       padding: 1rem;
       font-family: monospace;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: var(--fg);
-      max-height: 380px;
+      max-height: 400px;
       overflow-y: auto;
       white-space: pre;
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
     .toast {
@@ -269,8 +289,6 @@
       }
       .sub-exam-row {
         grid-template-columns: 1fr 1fr;
-        padding-bottom: 0.75rem;
-        border-bottom: 1px solid var(--border-subtle);
       }
     }
 
@@ -296,7 +314,7 @@
   <div class="container">
     <div class="editor-top-nav">
       <a href="index.html" class="nav-back-link" id="navBackLink">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="19" y1="12" x2="5" y2="12"></line>
           <polyline points="12 19 5 12 12 5"></polyline>
         </svg>
@@ -309,16 +327,13 @@
       </div>
     </div>
 
-    <header class="page-header">
-      <div>
-        <h1 id="pageTitle">Daten-Editor</h1>
-        <p class="subtitle" id="pageSubtitle">Erstelle und bearbeite deine data.json visuell ohne Programmieraufwand</p>
-      </div>
+    <header class="page-header" style="margin-bottom: 1.25rem;">
+      <h1 id="pageTitle">Daten-Editor</h1>
     </header>
 
     <div class="action-bar">
       <button class="btn btn-primary" id="btnDownload">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
           <polyline points="7 10 12 15 17 10"></polyline>
           <line x1="12" y1="15" x2="12" y2="3"></line>
@@ -327,7 +342,7 @@
       </button>
 
       <button class="btn btn-secondary" id="btnCopy">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
           <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
         </svg>
@@ -335,7 +350,7 @@
       </button>
 
       <label class="btn btn-secondary" style="cursor: pointer;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
           <polyline points="17 8 12 3 7 8"></polyline>
           <line x1="12" y1="3" x2="12" y2="15"></line>
@@ -345,15 +360,15 @@
       </label>
 
       <button class="btn btn-secondary" id="btnAddModule">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="12" y1="5" x2="12" y2="19"></line>
           <line x1="5" y1="12" x2="19" y2="12"></line>
         </svg>
-        <span id="btnAddModuleText">+ Modul hinzufügen</span>
+        <span id="btnAddModuleText">Modul hinzufügen</span>
       </button>
 
       <button class="btn btn-secondary" id="btnTogglePreview">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
           <circle cx="12" cy="12" r="3"></circle>
         </svg>
@@ -365,11 +380,11 @@
       <div class="section-title">
         <span id="semestersTitle">Semester</span>
         <button class="btn btn-secondary btn-sm" id="btnAddSemester">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
-          <span id="btnAddSemesterText">+ Semester</span>
+          <span id="btnAddSemesterText">Semester hinzufügen</span>
         </button>
       </div>
       <div class="semesters-grid" id="semestersContainer"></div>
@@ -394,15 +409,14 @@
       de: {
         back: 'Noten & Module',
         title: 'Daten-Editor',
-        subtitle: 'Erstelle und bearbeite deine data.json visuell ohne Programmieraufwand',
         downloadJson: 'data.json herunterladen',
         copyJson: 'JSON kopieren',
         importJson: 'JSON laden',
-        addModule: '+ Modul hinzufügen',
+        addModule: 'Modul hinzufügen',
         previewJson: 'Vorschau',
         hidePreview: 'Vorschau ausblenden',
         semestersTitle: 'Semester',
-        addSemester: '+ Semester',
+        addSemester: 'Semester hinzufügen',
         semesterName: 'Name',
         semesterPeriod: 'Zeitraum',
         moduleCode: 'Modul-Code',
@@ -415,13 +429,13 @@
         statusRecognized: 'anerkannt',
         statusOpen: 'offen',
         subExams: 'Teilleistungen / Prüfungen',
-        addExam: '+ Prüfung',
+        addExam: 'Prüfung hinzufügen',
         examName: 'Lehrveranstaltung / Prüfung',
         examFormat: 'Prüfungsform',
         examDate: 'Datum',
         examTime: 'Uhrzeit',
         examGrade: 'Note',
-        examWeight: 'Gewicht',
+        examWeight: 'Gewicht (0.0 – 1.0)',
         deleteModule: 'Modul löschen',
         deleteExam: 'Löschen',
         deleteSemester: 'Löschen',
@@ -432,15 +446,14 @@
       en: {
         back: 'Grades & Modules',
         title: 'Data Editor',
-        subtitle: 'Visually create and customize your data.json without writing code',
         downloadJson: 'Download data.json',
         copyJson: 'Copy JSON',
         importJson: 'Load JSON',
-        addModule: '+ Add Module',
+        addModule: 'Add Module',
         previewJson: 'Preview JSON',
         hidePreview: 'Hide Preview',
         semestersTitle: 'Semesters',
-        addSemester: '+ Semester',
+        addSemester: 'Add Semester',
         semesterName: 'Name',
         semesterPeriod: 'Period',
         moduleCode: 'Module Code',
@@ -453,13 +466,13 @@
         statusRecognized: 'recognized',
         statusOpen: 'pending',
         subExams: 'Sub-assessments / Exams',
-        addExam: '+ Exam',
+        addExam: 'Add Exam',
         examName: 'Course / Exam Title',
         examFormat: 'Assessment Format',
         examDate: 'Date',
         examTime: 'Time',
         examGrade: 'Grade',
-        examWeight: 'Weight',
+        examWeight: 'Weight (0.0 – 1.0)',
         deleteModule: 'Delete Module',
         deleteExam: 'Delete',
         deleteSemester: 'Delete',
@@ -531,7 +544,6 @@
       document.title = `${t('title')} – ${t('back')}`;
       document.getElementById('backText').textContent = t('back');
       document.getElementById('pageTitle').textContent = t('title');
-      document.getElementById('pageSubtitle').textContent = t('subtitle');
       document.getElementById('btnDownloadText').textContent = t('downloadJson');
       document.getElementById('btnCopyText').textContent = t('copyJson');
       document.getElementById('btnImportText').textContent = t('importJson');
@@ -553,24 +565,40 @@
         <div class="semester-item">
           <div class="semester-item-header">
             <span>#${s.id}</span>
-            <button class="btn btn-danger btn-sm" onclick="removeSemester(${idx})" title="${t('deleteSemester')}">
-              &times;
+            <button class="btn btn-danger btn-icon-only" onclick="removeSemester(${idx})" title="${t('deleteSemester')}">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
             </button>
           </div>
           <div class="form-group">
             <label class="form-label">${t('semesterName')}</label>
-            <input type="text" class="form-input" value="${s.name || ''}" placeholder="z.B. S1" oninput="updateSemester(${idx}, 'name', this.value)">
+            <input type="text" class="form-input" value="${s.name || ''}" placeholder="S1" oninput="updateSemester(${idx}, 'name', this.value)">
           </div>
           <div class="form-group">
             <label class="form-label">${t('semesterPeriod')}</label>
-            <input type="text" class="form-input" value="${s.period || ''}" placeholder="z.B. WiSe 25/26" oninput="updateSemester(${idx}, 'period', this.value)">
+            <input type="text" class="form-input" value="${s.period || ''}" placeholder="WiSe 25/26" oninput="updateSemester(${idx}, 'period', this.value)">
           </div>
         </div>
       `).join('');
     }
 
+    function refreshSemesterDropdowns() {
+      document.querySelectorAll('.mod-semester-select').forEach(sel => {
+        const mIdx = Number(sel.getAttribute('data-midx'));
+        const currentVal = state.modules[mIdx]?.semester;
+        sel.innerHTML = state.semesters.map(s => `
+          <option value="${s.id}" ${Number(currentVal) === Number(s.id) ? 'selected' : ''}>${s.name || 'S' + s.id}</option>
+        `).join('');
+      });
+    }
+
     function updateSemester(idx, field, val) {
       state.semesters[idx][field] = val;
+      if (field === 'name') {
+        refreshSemesterDropdowns();
+      }
       updatePreview();
     }
 
@@ -578,15 +606,25 @@
       const nextId = state.semesters.length > 0 ? Math.max(...state.semesters.map(s => s.id)) + 1 : 1;
       state.semesters.push({ id: nextId, name: `S${nextId}`, period: "" });
       renderSemesters();
-      renderModules();
+      refreshSemesterDropdowns();
       updatePreview();
     }
 
     function removeSemester(idx) {
       state.semesters.splice(idx, 1);
       renderSemesters();
-      renderModules();
+      refreshSemesterDropdowns();
       updatePreview();
+    }
+
+    function updateCardHeader(mIdx) {
+      const titleEl = document.getElementById(`card-title-${mIdx}`);
+      if (titleEl) {
+        const m = state.modules[mIdx];
+        const code = m.code || 'CODE';
+        const name = m.name || t('moduleName');
+        titleEl.textContent = `${code} – ${name}`;
+      }
     }
 
     function renderModules() {
@@ -622,18 +660,27 @@
               <label class="form-label">${t('examWeight')}</label>
               <input type="number" step="0.05" min="0" max="1" class="form-input" value="${sub.weight !== undefined ? sub.weight : 1}" oninput="updateSubExam(${mIdx}, ${sIdx}, 'weight', parseFloat(this.value) || 0)">
             </div>
-            <button class="btn btn-danger btn-sm" style="margin-top: 1.15rem; height: 28px; padding: 0 6px;" onclick="removeSubExam(${mIdx}, ${sIdx})" title="${t('deleteExam')}">&times;</button>
+            <button class="btn btn-danger btn-icon-only" onclick="removeSubExam(${mIdx}, ${sIdx})" title="${t('deleteExam')}">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+            </button>
           </div>
         `).join('');
 
         return `
           <div class="module-card">
             <div class="module-card-header">
-              <div>
-                <div class="module-card-title">${m.code || 'CODE'} – ${m.name || t('moduleName')}</div>
+              <div class="module-card-title" id="card-title-${mIdx}">
+                ${m.code || 'CODE'} – ${m.name || t('moduleName')}
               </div>
               <button class="btn btn-danger btn-sm" onclick="removeModule(${mIdx})">
-                ${t('deleteModule')}
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+                <span>${t('deleteModule')}</span>
               </button>
             </div>
 
@@ -648,7 +695,7 @@
               </div>
               <div class="form-group">
                 <label class="form-label">${t('semester')}</label>
-                <select class="form-select" onchange="updateModule(${mIdx}, 'semester', parseInt(this.value, 10))">
+                <select class="form-select mod-semester-select" data-midx="${mIdx}" onchange="updateModule(${mIdx}, 'semester', parseInt(this.value, 10))">
                   ${semesterOptions}
                 </select>
               </div>
@@ -666,7 +713,7 @@
               </div>
               <div class="form-group">
                 <label class="form-label">${t('grade')}</label>
-                <input type="text" class="form-input" value="${m.grade || ''}" placeholder="1.4" oninput="updateModule(${mIdx}, 'grade', this.value)">
+                <input type="text" class="form-input" value="${m.grade || ''}" placeholder="1.3" oninput="updateModule(${mIdx}, 'grade', this.value)">
               </div>
             </div>
 
@@ -674,7 +721,11 @@
               <div class="sub-exams-header">
                 <span>${t('subExams')}</span>
                 <button class="btn btn-secondary btn-sm" onclick="addSubExam(${mIdx})">
-                  ${t('addExam')}
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                  <span>${t('addExam')}</span>
                 </button>
               </div>
               ${subRows}
@@ -686,13 +737,16 @@
 
     function updateModule(mIdx, field, val) {
       state.modules[mIdx][field] = val;
+      if (field === 'code' || field === 'name') {
+        updateCardHeader(mIdx);
+      }
       updatePreview();
     }
 
     function addModule() {
       const firstSem = state.semesters.length > 0 ? state.semesters[0].id : 1;
       state.modules.push({
-        code: "NEW" + (state.modules.length + 1),
+        code: "CS10" + (state.modules.length + 1),
         name: "New Module",
         semester: firstSem,
         ects: 5,
@@ -701,7 +755,7 @@
         subjects: [
           {
             name: "Course 1",
-            format: "Exam",
+            format: "Written Exam",
             date: "",
             time: "",
             grade: "",
@@ -723,7 +777,7 @@
       state.modules[mIdx].subjects = state.modules[mIdx].subjects || [];
       state.modules[mIdx].subjects.push({
         name: "Course Part",
-        format: "Exam",
+        format: "Written Exam",
         date: "",
         time: "",
         grade: "",
