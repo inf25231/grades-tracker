@@ -96,13 +96,11 @@
       height: 34px;
       min-height: 34px;
       padding: 0;
-      display: inline-flex;
-      align-items: center;
       justify-content: center;
       border-radius: 6px;
     }
 
-    .section-card {
+    .section-card, .module-card {
       background: var(--bg-elevated);
       border: 1px solid var(--border);
       border-radius: 12px;
@@ -111,14 +109,30 @@
       box-shadow: var(--card-shadow);
     }
 
+    .module-card {
+      margin-bottom: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .section-title, .semester-item-header, .module-card-header, .sub-exams-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
     .section-title {
       font-size: 1.1rem;
       font-weight: 700;
       margin-bottom: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       color: var(--fg);
+    }
+
+    .semester-item-header, .sub-exams-header {
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--fg-secondary);
     }
 
     .semesters-grid {
@@ -135,15 +149,6 @@
       display: flex;
       flex-direction: column;
       gap: 0.6rem;
-    }
-
-    .semester-item-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.825rem;
-      font-weight: 600;
-      color: var(--fg-secondary);
     }
 
     .form-group {
@@ -180,22 +185,7 @@
       box-shadow: 0 0 0 2px rgba(41, 151, 255, 0.2);
     }
 
-    .module-card {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
-      box-shadow: var(--card-shadow);
-      display: flex;
-      flex-direction: column;
-      gap: 1.1rem;
-    }
-
     .module-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       border-bottom: 1px solid var(--border-subtle);
       padding-bottom: 0.75rem;
       gap: 1rem;
@@ -221,15 +211,6 @@
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
-    }
-
-    .sub-exams-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.825rem;
-      font-weight: 600;
-      color: var(--fg-secondary);
     }
 
     .sub-exam-row {
@@ -284,19 +265,13 @@
     }
 
     @media (max-width: 900px) {
-      .module-fields-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .sub-exam-row {
+      .module-fields-grid, .sub-exam-row {
         grid-template-columns: 1fr 1fr;
       }
     }
 
     @media (max-width: 680px) {
-      .module-fields-grid {
-        grid-template-columns: 1fr;
-      }
-      .sub-exam-row {
+      .module-fields-grid, .sub-exam-row {
         grid-template-columns: 1fr;
       }
       .action-bar {
@@ -313,12 +288,12 @@
 
   <div class="container">
     <div class="editor-top-nav">
-      <a href="index.html" class="nav-back-link" id="navBackLink">
+      <a href="index.html" class="nav-back-link">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="19" y1="12" x2="5" y2="12"></line>
           <polyline points="12 19 5 12 12 5"></polyline>
         </svg>
-        <span id="backText">Noten &amp; Module</span>
+        <span data-i18n="back">Noten &amp; Module</span>
       </a>
 
       <div class="segmented-control lang-toggle" id="langToggle">
@@ -328,7 +303,7 @@
     </div>
 
     <header class="page-header" style="margin-bottom: 1.25rem;">
-      <h1 id="pageTitle">Daten-Editor</h1>
+      <h1 data-i18n="title">Daten-Editor</h1>
     </header>
 
     <div class="action-bar">
@@ -338,7 +313,7 @@
           <polyline points="7 10 12 15 17 10"></polyline>
           <line x1="12" y1="15" x2="12" y2="3"></line>
         </svg>
-        <span id="btnDownloadText">data.json herunterladen</span>
+        <span data-i18n="downloadJson">data.json herunterladen</span>
       </button>
 
       <button class="btn btn-secondary" id="btnCopy">
@@ -346,25 +321,25 @@
           <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
           <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
         </svg>
-        <span id="btnCopyText">JSON kopieren</span>
+        <span data-i18n="copyJson">JSON kopieren</span>
       </button>
 
-      <label class="btn btn-secondary" style="cursor: pointer;">
+      <label class="btn btn-secondary">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
           <polyline points="17 8 12 3 7 8"></polyline>
           <line x1="12" y1="3" x2="12" y2="15"></line>
         </svg>
-        <span id="btnImportText">JSON laden</span>
-        <input type="file" id="fileInput" accept=".json" style="display: none;">
+        <span data-i18n="importJson">JSON laden</span>
+        <input type="file" id="fileInput" accept=".json" hidden>
       </label>
 
-      <button class="btn btn-secondary" id="btnAddModule">
+      <button class="btn btn-secondary" onclick="addModule()">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="12" y1="5" x2="12" y2="19"></line>
           <line x1="5" y1="12" x2="19" y2="12"></line>
         </svg>
-        <span id="btnAddModuleText">Modul hinzufügen</span>
+        <span data-i18n="addModule">Modul hinzufügen</span>
       </button>
 
       <button class="btn btn-secondary" id="btnTogglePreview">
@@ -378,13 +353,13 @@
 
     <section class="section-card">
       <div class="section-title">
-        <span id="semestersTitle">Semester</span>
-        <button class="btn btn-secondary btn-sm" id="btnAddSemester">
+        <span data-i18n="semestersTitle">Semester</span>
+        <button class="btn btn-secondary btn-sm" onclick="addSemester()">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
-          <span id="btnAddSemesterText">Semester hinzufügen</span>
+          <span data-i18n="addSemester">Semester hinzufügen</span>
         </button>
       </div>
       <div class="semesters-grid" id="semestersContainer"></div>
@@ -392,7 +367,7 @@
 
     <section id="modulesContainer"></section>
 
-    <section class="section-card" id="previewSection" style="display: none;">
+    <section class="section-card" id="previewSection" hidden>
       <div class="section-title">
         <span>JSON Preview</span>
       </div>
@@ -404,6 +379,7 @@
 
   <script>
     let currentLang = localStorage.getItem('lang') || 'de';
+    const previewSection = document.getElementById('previewSection');
 
     const I18N = {
       de: {
@@ -483,8 +459,7 @@
     };
 
     function t(key) {
-      const dict = I18N[currentLang] || I18N.de;
-      return dict[key] || I18N.de[key] || key;
+      return I18N[currentLang]?.[key] || I18N.de[key] || key;
     }
 
     let state = {
@@ -501,14 +476,7 @@
           grade: "1.3",
           status: "bestanden",
           subjects: [
-            {
-              name: "Programming Basics",
-              format: "Written Exam (90 min)",
-              date: "15.01.2026",
-              time: "09:00",
-              grade: "1.3",
-              weight: 1.0
-            }
+            { name: "Programming Basics", format: "Written Exam (90 min)", date: "15.01.2026", time: "09:00", grade: "1.3", weight: 1.0 }
           ]
         },
         {
@@ -519,18 +487,30 @@
           grade: "1.7",
           status: "bestanden",
           subjects: [
-            {
-              name: "Linear Algebra",
-              format: "Written Exam",
-              date: "20.01.2026",
-              time: "10:00",
-              grade: "1.7",
-              weight: 1.0
-            }
+            { name: "Linear Algebra", format: "Written Exam", date: "20.01.2026", time: "10:00", grade: "1.7", weight: 1.0 }
           ]
         }
       ]
     };
+
+    const newExam = name => ({ name, format: "Written Exam", date: "", time: "", grade: "", weight: 1.0 });
+
+    const TRASH_ICON = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="3 6 5 6 21 6"></polyline>
+      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+    </svg>`;
+
+    function esc(s) {
+      return String(s ?? '').replace(/[&<>"']/g, c => `&#${c.charCodeAt(0)};`);
+    }
+
+    function field(label, value, onInput, attrs = '') {
+      return `<label class="form-group"><span class="form-label">${label}</span><input class="form-input" ${attrs} value="${esc(value)}" oninput="${onInput}"></label>`;
+    }
+
+    function select(label, onChange, options) {
+      return `<label class="form-group"><span class="form-label">${label}</span><select class="form-select" onchange="${onChange}">${options}</select></label>`;
+    }
 
     function showToast(msg) {
       const el = document.getElementById('toast');
@@ -542,185 +522,70 @@
     function applyTranslations() {
       document.documentElement.lang = currentLang;
       document.title = `${t('title')} – ${t('back')}`;
-      document.getElementById('backText').textContent = t('back');
-      document.getElementById('pageTitle').textContent = t('title');
-      document.getElementById('btnDownloadText').textContent = t('downloadJson');
-      document.getElementById('btnCopyText').textContent = t('copyJson');
-      document.getElementById('btnImportText').textContent = t('importJson');
-      document.getElementById('btnAddModuleText').textContent = t('addModule');
-      document.getElementById('semestersTitle').textContent = t('semestersTitle');
-      document.getElementById('btnAddSemesterText').textContent = t('addSemester');
-
-      const isPreviewOpen = document.getElementById('previewSection').style.display !== 'none';
-      document.getElementById('btnPreviewText').textContent = isPreviewOpen ? t('hidePreview') : t('previewJson');
-
-      document.querySelectorAll('#langToggle .seg-btn').forEach(b => {
-        b.classList.toggle('active', b.getAttribute('data-lang') === currentLang);
-      });
+      document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = t(el.dataset.i18n));
+      document.getElementById('btnPreviewText').textContent = t(previewSection.hidden ? 'previewJson' : 'hidePreview');
+      document.querySelectorAll('#langToggle .seg-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
     }
 
     function renderSemesters() {
-      const container = document.getElementById('semestersContainer');
-      container.innerHTML = state.semesters.map((s, idx) => `
+      document.getElementById('semestersContainer').innerHTML = state.semesters.map((s, i) => `
         <div class="semester-item">
           <div class="semester-item-header">
-            <span>#${s.id}</span>
-            <button class="btn btn-danger btn-icon-only" onclick="removeSemester(${idx})" title="${t('deleteSemester')}">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="3 6 5 6 21 6"></polyline>
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-              </svg>
-            </button>
+            <span>#${esc(s.id)}</span>
+            <button class="btn btn-danger btn-icon-only" onclick="removeSemester(${i})" title="${t('deleteSemester')}">${TRASH_ICON}</button>
           </div>
-          <div class="form-group">
-            <label class="form-label">${t('semesterName')}</label>
-            <input type="text" class="form-input" value="${s.name || ''}" placeholder="S1" oninput="updateSemester(${idx}, 'name', this.value)">
-          </div>
-          <div class="form-group">
-            <label class="form-label">${t('semesterPeriod')}</label>
-            <input type="text" class="form-input" value="${s.period || ''}" placeholder="WiSe 25/26" oninput="updateSemester(${idx}, 'period', this.value)">
-          </div>
+          ${field(t('semesterName'), s.name, `updateSemester(${i}, 'name', this.value)`, 'placeholder="S1"')}
+          ${field(t('semesterPeriod'), s.period, `updateSemester(${i}, 'period', this.value)`, 'placeholder="WiSe 25/26"')}
         </div>
       `).join('');
     }
 
-    function refreshSemesterDropdowns() {
-      document.querySelectorAll('.mod-semester-select').forEach(sel => {
-        const mIdx = Number(sel.getAttribute('data-midx'));
-        const currentVal = state.modules[mIdx]?.semester;
-        sel.innerHTML = state.semesters.map(s => `
-          <option value="${s.id}" ${Number(currentVal) === Number(s.id) ? 'selected' : ''}>${s.name || 'S' + s.id}</option>
-        `).join('');
-      });
-    }
-
-    function updateSemester(idx, field, val) {
-      state.semesters[idx][field] = val;
-      if (field === 'name') {
-        refreshSemesterDropdowns();
-      }
-      updatePreview();
-    }
-
-    function addSemester() {
-      const nextId = state.semesters.length > 0 ? Math.max(...state.semesters.map(s => s.id)) + 1 : 1;
-      state.semesters.push({ id: nextId, name: `S${nextId}`, period: "" });
-      renderSemesters();
-      refreshSemesterDropdowns();
-      updatePreview();
-    }
-
-    function removeSemester(idx) {
-      state.semesters.splice(idx, 1);
-      renderSemesters();
-      refreshSemesterDropdowns();
-      updatePreview();
-    }
-
-    function updateCardHeader(mIdx) {
-      const titleEl = document.getElementById(`card-title-${mIdx}`);
-      if (titleEl) {
-        const m = state.modules[mIdx];
-        const code = m.code || 'CODE';
-        const name = m.name || t('moduleName');
-        titleEl.textContent = `${code} – ${name}`;
-      }
-    }
+    const cardTitle = m => `${m.code || 'CODE'} – ${m.name || t('moduleName')}`;
 
     function renderModules() {
-      const container = document.getElementById('modulesContainer');
-      container.innerHTML = state.modules.map((m, mIdx) => {
-        const semesterOptions = state.semesters.map(s => `
-          <option value="${s.id}" ${Number(m.semester) === Number(s.id) ? 'selected' : ''}>${s.name || 'S' + s.id}</option>
-        `).join('');
+      document.getElementById('modulesContainer').innerHTML = state.modules.map((m, i) => {
+        const semesterOptions = state.semesters.map(s =>
+          `<option value="${esc(s.id)}" ${Number(m.semester) === Number(s.id) ? 'selected' : ''}>${esc(s.name || 'S' + s.id)}</option>`
+        ).join('');
+        const statusOptions = [['bestanden', 'statusPassed'], ['anerkannt', 'statusRecognized'], ['offen', 'statusOpen']].map(([value, key]) =>
+          `<option value="${value}" ${m.status === value ? 'selected' : ''}>${t(key)}</option>`
+        ).join('');
 
-        const subRows = (m.subjects || []).map((sub, sIdx) => `
-          <div class="sub-exam-row">
-            <div class="form-group">
-              <label class="form-label">${t('examName')}</label>
-              <input type="text" class="form-input" value="${sub.name || ''}" placeholder="${t('examName')}" oninput="updateSubExam(${mIdx}, ${sIdx}, 'name', this.value)">
+        const subRows = (m.subjects || []).map((sub, j) => {
+          const on = f => `updateSubExam(${i}, ${j}, '${f}', this.value)`;
+          return `
+            <div class="sub-exam-row">
+              ${field(t('examName'), sub.name, on('name'), `placeholder="${t('examName')}"`)}
+              ${field(t('examFormat'), sub.format, on('format'), 'placeholder="Klausur / Projekt"')}
+              ${field(t('examDate'), sub.date, on('date'), 'placeholder="15.01.2026"')}
+              ${field(t('examTime'), sub.time, on('time'), 'placeholder="09:00"')}
+              ${field(t('examGrade'), sub.grade, on('grade'), 'placeholder="1.3"')}
+              ${field(t('examWeight'), sub.weight ?? 1, `updateSubExam(${i}, ${j}, 'weight', parseFloat(this.value) || 0)`, 'type="number" step="0.05" min="0" max="1"')}
+              <button class="btn btn-danger btn-icon-only" onclick="removeSubExam(${i}, ${j})" title="${t('deleteExam')}">${TRASH_ICON}</button>
             </div>
-            <div class="form-group">
-              <label class="form-label">${t('examFormat')}</label>
-              <input type="text" class="form-input" value="${sub.format || ''}" placeholder="Klausur / Projekt" oninput="updateSubExam(${mIdx}, ${sIdx}, 'format', this.value)">
-            </div>
-            <div class="form-group">
-              <label class="form-label">${t('examDate')}</label>
-              <input type="text" class="form-input" value="${sub.date || ''}" placeholder="15.01.2026" oninput="updateSubExam(${mIdx}, ${sIdx}, 'date', this.value)">
-            </div>
-            <div class="form-group">
-              <label class="form-label">${t('examTime')}</label>
-              <input type="text" class="form-input" value="${sub.time || ''}" placeholder="09:00" oninput="updateSubExam(${mIdx}, ${sIdx}, 'time', this.value)">
-            </div>
-            <div class="form-group">
-              <label class="form-label">${t('examGrade')}</label>
-              <input type="text" class="form-input" value="${sub.grade || ''}" placeholder="1.3" oninput="updateSubExam(${mIdx}, ${sIdx}, 'grade', this.value)">
-            </div>
-            <div class="form-group">
-              <label class="form-label">${t('examWeight')}</label>
-              <input type="number" step="0.05" min="0" max="1" class="form-input" value="${sub.weight !== undefined ? sub.weight : 1}" oninput="updateSubExam(${mIdx}, ${sIdx}, 'weight', parseFloat(this.value) || 0)">
-            </div>
-            <button class="btn btn-danger btn-icon-only" onclick="removeSubExam(${mIdx}, ${sIdx})" title="${t('deleteExam')}">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="3 6 5 6 21 6"></polyline>
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-              </svg>
-            </button>
-          </div>
-        `).join('');
+          `;
+        }).join('');
 
         return `
           <div class="module-card">
             <div class="module-card-header">
-              <div class="module-card-title" id="card-title-${mIdx}">
-                ${m.code || 'CODE'} – ${m.name || t('moduleName')}
-              </div>
-              <button class="btn btn-danger btn-sm" onclick="removeModule(${mIdx})">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="3 6 5 6 21 6"></polyline>
-                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                </svg>
-                <span>${t('deleteModule')}</span>
-              </button>
+              <div class="module-card-title" id="card-title-${i}">${esc(cardTitle(m))}</div>
+              <button class="btn btn-danger btn-sm" onclick="removeModule(${i})">${TRASH_ICON}<span>${t('deleteModule')}</span></button>
             </div>
 
             <div class="module-fields-grid">
-              <div class="form-group">
-                <label class="form-label">${t('moduleCode')}</label>
-                <input type="text" class="form-input" value="${m.code || ''}" placeholder="CS101" oninput="updateModule(${mIdx}, 'code', this.value)">
-              </div>
-              <div class="form-group">
-                <label class="form-label">${t('moduleName')}</label>
-                <input type="text" class="form-input" value="${m.name || ''}" placeholder="Computer Science I" oninput="updateModule(${mIdx}, 'name', this.value)">
-              </div>
-              <div class="form-group">
-                <label class="form-label">${t('semester')}</label>
-                <select class="form-select mod-semester-select" data-midx="${mIdx}" onchange="updateModule(${mIdx}, 'semester', parseInt(this.value, 10))">
-                  ${semesterOptions}
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="form-label">${t('ects')}</label>
-                <input type="number" class="form-input" value="${m.ects || 5}" oninput="updateModule(${mIdx}, 'ects', parseInt(this.value, 10) || 0)">
-              </div>
-              <div class="form-group">
-                <label class="form-label">${t('status')}</label>
-                <select class="form-select" onchange="updateModule(${mIdx}, 'status', this.value)">
-                  <option value="bestanden" ${m.status === 'bestanden' ? 'selected' : ''}>${t('statusPassed')}</option>
-                  <option value="anerkannt" ${m.status === 'anerkannt' ? 'selected' : ''}>${t('statusRecognized')}</option>
-                  <option value="offen" ${m.status === 'offen' ? 'selected' : ''}>${t('statusOpen')}</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="form-label">${t('grade')}</label>
-                <input type="text" class="form-input" value="${m.grade || ''}" placeholder="1.3" oninput="updateModule(${mIdx}, 'grade', this.value)">
-              </div>
+              ${field(t('moduleCode'), m.code, `updateModule(${i}, 'code', this.value)`, 'placeholder="CS101"')}
+              ${field(t('moduleName'), m.name, `updateModule(${i}, 'name', this.value)`, 'placeholder="Computer Science I"')}
+              ${select(t('semester'), `updateModule(${i}, 'semester', parseInt(this.value, 10))`, semesterOptions)}
+              ${field(t('ects'), m.ects ?? 0, `updateModule(${i}, 'ects', parseInt(this.value, 10) || 0)`, 'type="number"')}
+              ${select(t('status'), `updateModule(${i}, 'status', this.value)`, statusOptions)}
+              ${field(t('grade'), m.grade, `updateModule(${i}, 'grade', this.value)`, 'placeholder="1.3"')}
             </div>
 
             <div class="sub-exams-container">
               <div class="sub-exams-header">
                 <span>${t('subExams')}</span>
-                <button class="btn btn-secondary btn-sm" onclick="addSubExam(${mIdx})">
+                <button class="btn btn-secondary btn-sm" onclick="addSubExam(${i})">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
                     <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -735,77 +600,83 @@
       }).join('');
     }
 
-    function updateModule(mIdx, field, val) {
-      state.modules[mIdx][field] = val;
-      if (field === 'code' || field === 'name') {
-        updateCardHeader(mIdx);
+    function refresh() {
+      renderSemesters();
+      renderModules();
+      updatePreview();
+    }
+
+    function updateSemester(i, key, val) {
+      state.semesters[i][key] = val;
+      // re-render only the modules so the semester input keeps focus; their dropdowns show semester names
+      if (key === 'name') renderModules();
+      updatePreview();
+    }
+
+    function addSemester() {
+      const nextId = state.semesters.length > 0 ? Math.max(...state.semesters.map(s => s.id)) + 1 : 1;
+      state.semesters.push({ id: nextId, name: `S${nextId}`, period: "" });
+      refresh();
+    }
+
+    function removeSemester(i) {
+      state.semesters.splice(i, 1);
+      refresh();
+    }
+
+    function updateModule(i, key, val) {
+      state.modules[i][key] = val;
+      if (key === 'code' || key === 'name') {
+        document.getElementById(`card-title-${i}`).textContent = cardTitle(state.modules[i]);
       }
       updatePreview();
     }
 
     function addModule() {
-      const firstSem = state.semesters.length > 0 ? state.semesters[0].id : 1;
       state.modules.push({
         code: "CS10" + (state.modules.length + 1),
         name: "New Module",
-        semester: firstSem,
+        semester: state.semesters.length > 0 ? state.semesters[0].id : 1,
         ects: 5,
         grade: "",
         status: "bestanden",
-        subjects: [
-          {
-            name: "Course 1",
-            format: "Written Exam",
-            date: "",
-            time: "",
-            grade: "",
-            weight: 1.0
-          }
-        ]
+        subjects: [newExam("Course 1")]
       });
-      renderModules();
+      refresh();
+    }
+
+    function removeModule(i) {
+      state.modules.splice(i, 1);
+      refresh();
+    }
+
+    function addSubExam(i) {
+      (state.modules[i].subjects ||= []).push(newExam("Course Part"));
+      refresh();
+    }
+
+    function updateSubExam(i, j, key, val) {
+      state.modules[i].subjects[j][key] = val;
       updatePreview();
     }
 
-    function removeModule(mIdx) {
-      state.modules.splice(mIdx, 1);
-      renderModules();
-      updatePreview();
+    function removeSubExam(i, j) {
+      state.modules[i].subjects.splice(j, 1);
+      refresh();
     }
 
-    function addSubExam(mIdx) {
-      state.modules[mIdx].subjects = state.modules[mIdx].subjects || [];
-      state.modules[mIdx].subjects.push({
-        name: "Course Part",
-        format: "Written Exam",
-        date: "",
-        time: "",
-        grade: "",
-        weight: 1.0
-      });
-      renderModules();
-      updatePreview();
-    }
-
-    function updateSubExam(mIdx, sIdx, field, val) {
-      state.modules[mIdx].subjects[sIdx][field] = val;
-      updatePreview();
-    }
-
-    function removeSubExam(mIdx, sIdx) {
-      state.modules[mIdx].subjects.splice(sIdx, 1);
-      renderModules();
-      updatePreview();
-    }
-
+    // normalizes known fields; the spreads keep fields the editor has no inputs for (config, semesterLabel, ...)
     function getCleanData() {
       return {
+        ...state,
         semesters: state.semesters.map(s => ({
+          ...s,
           id: Number(s.id),
           name: s.name || `S${s.id}`,
           period: s.period || ""
         })),
         modules: state.modules.map(m => ({
+          ...m,
           code: m.code || "",
           name: m.name || "",
           semester: Number(m.semester) || 1,
@@ -813,6 +684,7 @@
           grade: m.grade || "",
           status: m.status || "bestanden",
           subjects: (m.subjects || []).map(sub => ({
+            ...sub,
             name: sub.name || "",
             format: sub.format || "",
             date: sub.date || "",
@@ -824,83 +696,59 @@
       };
     }
 
+    const json = () => JSON.stringify(getCleanData(), null, 2);
+
     function updatePreview() {
-      const pre = document.getElementById('jsonPreview');
-      if (pre) {
-        pre.textContent = JSON.stringify(getCleanData(), null, 2);
-      }
+      document.getElementById('jsonPreview').textContent = json();
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('langToggle').addEventListener('click', e => {
+      const btn = e.target.closest('.seg-btn');
+      if (!btn || btn.dataset.lang === currentLang) return;
+      currentLang = btn.dataset.lang;
+      localStorage.setItem('lang', currentLang);
       applyTranslations();
-      renderSemesters();
-      renderModules();
-      updatePreview();
-
-      document.getElementById('langToggle').addEventListener('click', (e) => {
-        const btn = e.target.closest('.seg-btn');
-        if (!btn) return;
-        const newLang = btn.getAttribute('data-lang');
-        if (newLang === currentLang) return;
-        currentLang = newLang;
-        localStorage.setItem('lang', currentLang);
-        applyTranslations();
-        renderSemesters();
-        renderModules();
-      });
-
-      document.getElementById('btnAddSemester').addEventListener('click', addSemester);
-      document.getElementById('btnAddModule').addEventListener('click', addModule);
-
-      document.getElementById('btnTogglePreview').addEventListener('click', () => {
-        const sec = document.getElementById('previewSection');
-        const isHidden = sec.style.display === 'none';
-        sec.style.display = isHidden ? 'block' : 'none';
-        document.getElementById('btnPreviewText').textContent = isHidden ? t('hidePreview') : t('previewJson');
-        if (isHidden) updatePreview();
-      });
-
-      document.getElementById('btnCopy').addEventListener('click', () => {
-        const dataStr = JSON.stringify(getCleanData(), null, 2);
-        navigator.clipboard.writeText(dataStr).then(() => {
-          showToast(t('copied'));
-        });
-      });
-
-      document.getElementById('btnDownload').addEventListener('click', () => {
-        const dataStr = JSON.stringify(getCleanData(), null, 2);
-        const blob = new Blob([dataStr], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'data.json';
-        a.click();
-        URL.revokeObjectURL(url);
-      });
-
-      document.getElementById('fileInput').addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (evt) => {
-          try {
-            const parsed = JSON.parse(evt.target.result);
-            if (!parsed.modules || !Array.isArray(parsed.modules)) {
-              throw new Error('Missing modules');
-            }
-            state.semesters = Array.isArray(parsed.semesters) ? parsed.semesters : [];
-            state.modules = parsed.modules;
-            renderSemesters();
-            renderModules();
-            updatePreview();
-            showToast(t('imported'));
-          } catch (err) {
-            alert(t('invalidJson'));
-          }
-        };
-        reader.readAsText(file);
-      });
+      refresh();
     });
+
+    document.getElementById('btnTogglePreview').addEventListener('click', () => {
+      previewSection.hidden = !previewSection.hidden;
+      document.getElementById('btnPreviewText').textContent = t(previewSection.hidden ? 'previewJson' : 'hidePreview');
+    });
+
+    document.getElementById('btnCopy').addEventListener('click', () => {
+      navigator.clipboard.writeText(json()).then(() => showToast(t('copied')));
+    });
+
+    document.getElementById('btnDownload').addEventListener('click', () => {
+      const url = URL.createObjectURL(new Blob([json()], { type: 'application/json' }));
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'data.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('fileInput').addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = evt => {
+        try {
+          const parsed = JSON.parse(evt.target.result);
+          if (!Array.isArray(parsed.modules)) throw new Error('Missing modules');
+          state = { ...parsed, semesters: Array.isArray(parsed.semesters) ? parsed.semesters : [] };
+          refresh();
+          showToast(t('imported'));
+        } catch {
+          alert(t('invalidJson'));
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    applyTranslations();
+    refresh();
   </script>
 </body>
 </html>
